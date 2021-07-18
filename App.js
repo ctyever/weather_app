@@ -20,7 +20,7 @@ export default function App() {
 
   const getLocation = async () => {
     
-    const API_KEY = 'a0fc372bb75934f6c6c7b3c82e6fc595'
+    const API_KEY = ''
 
     try {
       
