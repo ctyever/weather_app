@@ -4,45 +4,30 @@ import Loading from './components/Loading';
 import * as Location from 'expo-location';
 // import getWeather from './api/index'
 import { Alert } from 'react-native'
+import Weather from './components/Weather'
 import axios from 'axios'
 
 
 export default function App() {
 
-  
-
   const [isLoading, setIsLoading] = useState(true);
- 
-  // // const getWeather = (latitude, longitude) => {const {data} = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=
-  // //     ${latitude}&lon=${longitude}&APPID=${API_KEY}`);
-  // //       console.log(data)
-  //     }
+  const API_KEY = '92d2ae85ad1d2ca29bd0b6bb43d1eb0d'
 
   const getLocation = async () => {
     
-    const API_KEY = 'a0fc372bb75934f6c6c7b3c82e6fc595'
-
     try {
       
       await Location.requestForegroundPermissionsAsync();
       
-      const {
-        coords: { latitude, longitude },
-      } = await Location.getCurrentPositionAsync();
+      const { coords } = await Location.getCurrentPositionAsync();
+      // console.log(coords.latitude, coords.longitude )
+      axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&APPID=${API_KEY}&units=metric`
+      ).then(res => {
+        console.log(res.data)
+      })
 
-      console.log( latitude, longitude)
-      // console.log(API_KEY)
-      const weather = (latitude, longitude) => {axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${API_KEY}`)}
-        
-      console.log(weather())
-     
-      // getWeather({latitude, longitude})
-      // .then(res => {
-      //   console.log({data})
-      // })
-      // .catch(err => {
-      //   console.log(err.data)
-      // })
+      
 
       setIsLoading(false);
       
@@ -54,12 +39,11 @@ export default function App() {
 
   useEffect(() => {
     getLocation();
-    // getWeather(latitude, longitude)
   })
 
   return (
     // View 는 div 와 같은 것이라고 생각하면 됨
-    isLoading ? <Loading/> : null
+    isLoading ? <Loading/> : <Weather/>
   );
 }
 
