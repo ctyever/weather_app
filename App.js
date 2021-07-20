@@ -15,6 +15,11 @@ export default function App() {
 
   const getLocation = async () => {
     
+<<<<<<< HEAD
+=======
+    const API_KEY = ''
+
+>>>>>>> ebe79051f49bbcfcb6518e3ced6d879e897288f4
     try {
       
       await Location.requestForegroundPermissionsAsync();
